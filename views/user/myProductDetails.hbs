@@ -1,0 +1,17 @@
+<section id="product-info">
+    <h3 class="title">{{product.name}}</h3>
+    <figure class="responsive-figure">
+        <img class="responsive-img"
+             src="data:{{product.image.contentType}};base64,{{product.image.data}}" alt="Снимка на продукта">
+    </figure>
+    <p>{{product.description}}</p>
+    <div class="content_wrapper">
+        <p>Kатегория: {{product.category.name}}</p>
+        <p>Кауза: {{product.cause.name}}</p>
+        <p>Цена: {{product.price}} лв</p>
+    </div>
+    <div class="button-area">
+        <a href="/product/edit/{{product._id}}" class="primary_btn">Редактиране</a>
+        <a href="/product/delete/{{product._id}}" class="primary_btn danger">Изтриване</a>
+    </div>
+</section>

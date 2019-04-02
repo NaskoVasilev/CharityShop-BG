@@ -1,0 +1,134 @@
+<section class="home_banner_area">
+    <div class="banner_inner">
+        <div class="container">
+            <div class="banner_content">
+                <p class="upper_text">Подай ръка</p>
+                <h2>за да подобрим света около нас</h2>
+                <p>
+                    Сега е момента да помогнете на хората около Вас и да направите света по-добро
+                    място за живеене. Просто дарете продукт или се включете в някое от събитията
+                    организирани от нас.
+                </p>
+                <a class="primary_btn mr-20" href="/product/add">Дари продукт</a>
+                <a class="primary_btn yellow_btn text-white" href="/cause/all">Виж каузите</a>
+                <a class="primary_btn mr-20" href="/products">Купи продукт</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Latest causes section-->
+<section class="features_causes" id="latest-causes">
+    <div class="container">
+        <div class="main_title">
+            <h2>Настоящи каузи</h2>
+            <p>Избери тези, които ти харесват най-много, и да помогнеш!</p>
+            <div class="text-center">
+                <a href="/cause/all" class="primary_btn">Виж всички каузи</a>
+            </div>
+        </div>
+
+        <div class="row">
+            {{#each causes}}
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <figure class="fix-size-image">
+							<a href="/cause/details/{{_id}}">
+                                <img class="card-img-top img-fluid"
+                                     src="data:{{this.image.contentType}};base64,{{this.image.data}}"
+                                     alt="Снимка на кауза">
+							</a>
+                            </figure>
+                            <div class="card_inner_body">
+                                <h4 class="card-title">{{this.name}}</h4>
+                                <div class="d-flex justify-content-between raised_goal">
+                                    <p>Събрани: {{this.raised}} лв</p>
+                                    <p><span>Нужни: {{this.goal}} лв</span></p>
+                                </div>
+                                <div class="d-flex justify-content-between donation align-items-center">
+                                    <a href="/cause/donate/{{_id}}" class="primary_btn">дари</a>
+                                    {{#if ../isAdmin}}
+                                        <a href="/cause/delete/{{this._id}}" class="primary_btn">изтрий</a>
+                                        <a href="/cause/edit/{{this._id}}" class="primary_btn">редактирай</a>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</section>
+
+<!--Upcoming events-->
+<section class="event_area section_gap_custom">
+    <div class="container">
+        <div class="main_title">
+            <h2>Предстоящи събития</h2>
+            <p>Можеш да се включиш в събитието като се запишеш.</p>
+            <div class="text-center">
+                <a href="/event/all" class="primary_btn">Виж всички събития</a>
+            </div>
+        </div>
+
+        <div class="row">
+            {{#each events}}
+                <div class="col-lg-6">
+                    <div class="single_event">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6 col-md-6">
+                                <figure>
+                                    <img class="img-fluid w-100" src="data:{{image.contentType}};base64,{{image.data}}">
+                                    <div class="img-overlay"></div>
+                                </figure>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="content_wrapper">
+                                    <h3 class="title">
+                                        <a href="/event/details/{{_id}}">{{name}}</a>
+                                    </h3>
+                                    <div id="endDate{{@index}}" style="display: none;">{{date}}</div>
+                                    <p>{{description}}</p>
+                                    <div id="clock{{@index}}" class="d-flex count_time">
+                                        <div class="mr-25">
+                                            <h4 class="days"></h4>
+                                            <p>Дни</p>
+                                        </div>
+                                        <div class="mr-25">
+                                            <h4 class="hours"></h4>
+                                            <p>Часове</p>
+                                        </div>
+                                        <div class="mr-25">
+                                            <h4 class="minutes"></h4>
+                                            <p>Минути</p>
+                                        </div>
+                                        <div>
+                                            <h4 class="seconds"></h4>
+                                            <p>Секунди</p>
+                                        </div>
+                                    </div>
+                                    <a href="/event/details/{{_id}}" class="primary_btn">Виж повече</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</section>
+<script src="../../content/js/countdown.js"></script>
+<script src="../../content/js/jquery-3.2.1.min.js"></script>
+
+<script>
+    let evenetsCount = document.getElementsByClassName('days').length
+
+    $(function () {
+        for (let i = 0; i < evenetsCount; i++) {
+            let dateString = document.getElementById('endDate' + i).innerHTML
+            initializeClock('clock' + i, dateString)
+        }
+    })
+</script>

@@ -1,0 +1,26 @@
+<section class="features_causes" id="products">
+    <h2 id="bought-products">Купени продукти!</h2>
+    <div class="container">
+
+        <div class="row">
+            {{#each products}}
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <figure>
+                                <img class="card-img-top img-fluid" src="data:{{image.contentType}};base64,{{image.data}}" alt="Снимка на продукта">
+                            </figure>
+                            <div class="card_inner_body">
+                                <h4 class="card-title">{{name}}</h4>
+                                <p>Описание: {{description}}</p>
+                                <div class="d-flex justify-content-between raised_goal">
+                                    <p><span>Цена: {{price}} лв</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</section>

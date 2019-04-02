@@ -1,0 +1,86 @@
+<!--================ Home Banner Area =================-->
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0"
+             data-background=""></div>
+        <div class="container">
+            <div class="banner_content text-center">
+                <h2>Събития</h2>
+                <p>Това са всички събития, които ще се проведат в следващите дни!</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================ End Home Banner Area =================-->
+
+<!--================ Start Recent Event Area =================-->
+<section class="event_area section_gap_top">
+    <div class="container">
+        <div class="main_title">
+            <h2>Предстоящи събития</h2>
+            <p>
+                Всички събития са с цел благотворителност и можеш да се
+                включиш като се регистрираш за избраното от теб събитие.
+            </p>
+        </div>
+
+        <div class="row">
+            {{#each events}}
+                <div class="col-lg-6">
+                    <div class="single_event">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6 col-md-6">
+                                <figure>
+                                    <img class="img-fluid w-100" src="data:{{image.contentType}};base64,{{image.data}}" alt="">
+                                    <div class="img-overlay"></div>
+                                </figure>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="content_wrapper">
+                                    <h3 class="title">
+                                        <a href="/event/details/{{_id}}">{{name}}</a>
+                                    </h3>
+                                    <p>{{description}}</p>
+                                    <div id="eventEndDate{{@index}}" style="display: none;">{{date}}</div>
+                                    <div class="d-flex count_time" id="eventClock{{@index}}">
+                                        <div class="mr-25">
+                                            <h4 class="days"></h4>
+                                            <p>Дни</p>
+                                        </div>
+                                        <div class="mr-25">
+                                            <h4 class="hours"></h4>
+                                            <p>Часове</p>
+                                        </div>
+                                        <div class="mr-25">
+                                            <h4 class="minutes"></h4>
+                                            <p>Минути</p>
+                                        </div>
+                                        <div>
+                                            <h4 class="seconds"></h4>
+                                            <p>Секунди</p>
+                                        </div>
+                                    </div>
+                                    <a href="/event/details/{{_id}}" class="primary_btn">Виж повече</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</section>
+<!--================ End Recent Event Area =================-->
+<script src="../../content/js/countdown.js"></script>
+<script src="../../content/js/jquery-3.2.1.min.js"></script>
+
+<script>
+    let evenetsCount = document.getElementsByClassName('days').length
+
+    $(function () {
+        for (let i = 0; i <evenetsCount; i++) {
+            let dateString = document.getElementById('eventEndDate' + i).innerHTML
+            initializeClock('eventClock' + i, dateString)
+        }
+    })
+</script>

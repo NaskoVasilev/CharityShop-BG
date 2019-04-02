@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--<link rel="shortcut icon" href="/icons/favicon.ico">-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="icon" href="/img/favicon.png" type="image/png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <!-- main css -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/css/index.css">
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/frontend/request.js"></script>
+    <script src="/frontend/controllers/messageController.js"></script>
+
+    <title>Charity Shop</title>
+</head>
+<header class="header_area">
+    <div class="main_menu">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <a class="navbar-brand logo_h" href="/"><img src="/img/logo.png" alt=""></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav menu_nav ml-auto" id="ul-nav">
+                            <li class="nav-item active"><a class="nav-link" href="/">Начало</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/blog/index"
+                                   role="button"
+                                   aria-haspopup="true" aria-expanded="false">Блог</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/blog/index">Начало</a>
+                                    <a class="dropdown-item" href="/blog/post/add">Добави публикация</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="/blog/post/all">Всички публикации</a>
+                                    <a class="dropdown-item" href="/blog/post/mostLiked">Най-харесвани</a>
+                                    <div class="dropdown-divider"></div>
+                                    {{#if isAdmin}}
+                                        <a class="dropdown-item" href="/blog/category/all">Категории</a>
+                                        <a class="dropdown-item" href="/blog/category/add">Добави категория</a>
+                                    {{/if}}
+                                </div>
+                            </li>
+
+                            <!--<li class="nav-item"><a class="nav-link" href="about-us.html">About</a></li>-->
+                            {{#if user}}
+                             <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+                                       role="button"
+                                       aria-haspopup="true" aria-expanded="false">Потребител</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="/user/profile">Профил</a>
+                                        <a class="dropdown-item" href="/user/notification/all">Съобщения</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+                                       role="button"
+                                       aria-haspopup="true" aria-expanded="false">Продукти</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="/user/myProducts">Дарени</a>
+                                        <a class="dropdown-item" href="/user/boughtProducts">Купени</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item"><span class="nav-link">Дебре дошъл, {{user.username}}!</span></li>
+                                {{#if isAdmin}}
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+                                           role="button"
+                                           aria-haspopup="true" aria-expanded="false">Админ</a>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="/category/add">Добави категория</a>
+                                            <a class="dropdown-item" href="/category/all">Всички категории</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="/cause/add">Добави кауза</a>
+                                            <a class="dropdown-item" href="/event/add">Добави събитие</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="/user/add/admin">Добави администратор</a>
+                                            <a class="dropdown-item" href="/user/remove/admin">Премахни администратор</a>
+                                            <a class="dropdown-item" href="/admin/notify">Изптрати съобщение</a>
+                                        </div>
+                                    </li>
+                                {{/if}}
+                                <form id="logout-from" action="/user/logout" method="post">
+                                    <li class="nav-item">
+                                        <a class="nav-link"
+                                           href="javascript:document.getElementById('logout-from').submit()">Изход</a>
+                                    </li>
+                                </form>
+                            {{else}}
+                                <li class="nav-item"><a class="nav-link" href="/user/login">Вход</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/user/register">Регистриране</a></li>
+                            {{/if}}
+							 <li class="nav-item"><a class="nav-link" href="https://charity-shop.herokuapp.com/"><img id="language" src="/img/english.png"></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+</header>
+<main>
+    <div id="messageBox">
+        {{{messages}}}
+    </div>
+
+        {{#if error}}
+            <div id="errorBox">
+                {{error}}
+            </div>
+        {{/if}}
+    {{{body}}}
+</main>
+</html>
